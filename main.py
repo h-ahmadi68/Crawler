@@ -3,30 +3,21 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
 from queue import Queue
 
-# ==============================
-# تنظیمات اصلی پروژه
-# ==============================
-MAX_PAGES = 30          # حداکثر تعداد صفحاتی که خزش می‌کنیم
-REQUEST_TIMEOUT = 5      # تایم‌اوت درخواست‌ها (ثانیه)
+
+MAX_PAGES = 30
+REQUEST_TIMEOUT = 5
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (TriangleCrawler Research Bot)"
 }
 
 
-# ==============================
-# 1) نرمال‌سازی لینک
-# حذف fragment و اسلش اضافه
-# ==============================
 def normalize_url(url):
     parsed = urlparse(url)
     normalized = parsed.scheme + "://" + parsed.netloc + parsed.path
     return normalized.rstrip("/")
 
 
-# ==============================
-# 2) استخراج لینک‌ها از صفحه
-# ==============================
 def extract_links(url):
     links = set()
 
@@ -51,9 +42,6 @@ def extract_links(url):
     return links
 
 
-# ==============================
-# 3) خزش وب و ساخت گراف
-# ==============================
 def crawl_web(seeds):
     visited = set()
     graph = {}
@@ -81,9 +69,6 @@ def crawl_web(seeds):
     return graph
 
 
-# ==============================
-# 4) پیدا کردن مثلث‌های ارجاعی
-# ==============================
 def find_triangles(graph):
     triangles = set()
 
@@ -103,18 +88,13 @@ def find_triangles(graph):
     return triangles
 
 
-# ==============================
-# 5) چاپ گراف (اختیاری)
-# ==============================
 def print_graph(graph):
     print("\n====== LINK GRAPH ======")
     for page, links in graph.items():
         print(f"{page} -> {len(links)} links")
 
 
-# ==============================
-# 6) اجرای اصلی برنامه
-# ==============================
+
 if __name__ == "__main__":
     seeds = [
         "https://quera.org/dashboard"
