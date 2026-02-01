@@ -6,7 +6,7 @@ from queue import Queue
 # ==============================
 # تنظیمات اصلی پروژه
 # ==============================
-MAX_PAGES = 5          # حداکثر تعداد صفحاتی که خزش می‌کنیم
+MAX_PAGES = 30          # حداکثر تعداد صفحاتی که خزش می‌کنیم
 REQUEST_TIMEOUT = 5      # تایم‌اوت درخواست‌ها (ثانیه)
 
 HEADERS = {
@@ -89,11 +89,11 @@ def find_triangles(graph):
 
     for a in graph:
         for b in graph[a]:            # a → b
-            if b not in graph:
+            if b not in graph or a == b:
                 continue
 
             for c in graph[b]:        # b → c
-                if c not in graph:
+                if c not in graph or b == c or a == c:
                     continue
 
                 if a in graph[c]:     # c → a
